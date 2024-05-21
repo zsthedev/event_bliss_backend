@@ -42,8 +42,11 @@ app.use(
 app.use(cookieParser());
 
 import authRouter from "./routes/authRoutes.js";
+import menuRouter from "./routes/menuRoutes.js";
 
 app.use("/api/v1", authRouter);
+app.use("/api/v1", menuRouter);
+
 
 app.get("/", (req, res) => {
   res.send(
