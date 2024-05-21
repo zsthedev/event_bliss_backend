@@ -29,11 +29,11 @@ export const createRequest = catchAsyncError(async (req, res, next) => {
   }
 
   // Check if each food item has an id
-  for (let f of food) {
-    if (!f.id) {
-      return next(new ErrorHandler("Please enter all fields", 401));
-    }
-  }
+  // for (let f of food) {
+  //   if (!f.id) {
+  //     return next(new ErrorHandler("Please enter all fields", 401));
+  //   }
+  // }
 
   const request = await Request.create({
     date: date,
