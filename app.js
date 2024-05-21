@@ -44,10 +44,12 @@ app.use(cookieParser());
 import authRouter from "./routes/authRoutes.js";
 import menuRouter from "./routes/menuRoutes.js";
 import eventRouter from "./routes/eventRoutes.js";
+import decorRouter from "./routes/decorRoute.js";
 
 app.use("/api/v1", authRouter);
 app.use("/api/v1", menuRouter);
 app.use("/api/v1", eventRouter);
+app.use("/api/v1", decorRouter);
 
 
 app.get("/", (req, res) => {
