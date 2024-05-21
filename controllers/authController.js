@@ -24,9 +24,6 @@ export const register = catchAsyncError(async (req, res, next) => {
   const fileUri = getDataUri(file);
   const mycloud = await cloudinary.v2.uploader.upload(fileUri.content);
 
-  await cloudinary.v2.uploader.destroy(user.avatar.public_id, {
-    resource_type: "image",
-  });
 
   user = await User.create({
     name: name,
