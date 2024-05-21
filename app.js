@@ -28,7 +28,9 @@ const allowedOrigins = [
   "http://localhost:5173/",
   "http://localhost:5173",
   "https://eventblissfyp.netlify.app/",
-  "https://eventblissfyp.netlify.app"
+  "https://eventblissfyp.netlify.app",
+  "https://eventblissfypzs.netlify.app/",
+  "https://eventblissfypzs.netlify.app",
 
 ];
 app.use(
