@@ -28,10 +28,21 @@ const schema = new mongoose.Schema({
     select: false,
     minLength: [6, "Password must be at least 6 characters"],
   },
-  
+
   subscription: {
     id: String,
     status: String,
+  },
+
+  events: [
+    {
+      id: mongoose.Schema.Types.ObjectId,
+    },
+  ],
+
+  costPerPerson: {
+    type: Number,
+    default: 1000,
   },
   avatar: {
     public_id: {
