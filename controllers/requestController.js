@@ -193,3 +193,21 @@ export const getRequestDetails = catchAsyncError(async (req, res, next) => {
     details: details,
   });
 });
+
+export const updateRequestStatus = catchAsyncError(async (req, res, next) => {
+  const { id } = req.params;
+  const request = await Request.findById(id);
+
+  if (!request) {
+    return next(new ErrorHandler("Invalid ID"), 400);
+  }
+
+  request.status = "fee_paid";
+  await request.save();
+  // Fetch the request by its ID
+
+  res.status(200).json({
+    success: true,
+    message: "Payment Done Successfully",
+  });
+});
