@@ -317,6 +317,17 @@ export const cartEmpty = catchAsyncError(async (req, res, next) => {
   });
 });
 
+export const getCartItems = catchAsyncError(async (req, res, next) => {
+  const user = await User.findById(req.user._id);
+
+  await user.save();
+
+  res.status(200).json({
+    sucess: true,
+    cart: user.cart,
+  });
+});
+
 // User.watch().on("change", async () => {
 //   const stats = await Stats.find({}).sort({ createdAt: "desc" }).limit(1);
 //   const subscription = await User.find({ "subscription.status": "active" });
