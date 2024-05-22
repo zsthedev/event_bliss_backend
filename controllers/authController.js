@@ -306,7 +306,7 @@ export const updateUserRole = catchAsyncError(async (req, res, next) => {
 });
 
 export const cartEmpty = catchAsyncError(async (req, res, next) => {
-  const user = await User.findById(id);
+  const user = await User.findById(req.user._id);
 
   user.cart = [];
 
