@@ -1,40 +1,33 @@
-import mongoose, { Schema } from "mongoose";
+import mongoose from "mongoose";
 
 const schema = new mongoose.Schema({
-  name: {
+  title: {
     type: String,
     required: true,
   },
-
-  description: {
-    type: String,
-    required: true,
+  event: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "Event",
+  },
+  decor: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "Decor",
   },
 
-  category: {
-    type: String,
-    required: true,
-  },
-
-  image: {
-    public_id: {
-      type: String,
-      required: true,
-    },
-    url: {
-      type: String,
-      required: true,
-    },
-  },
-
-  rating: {
+  numberOfPeople: {
     type: Number,
     default: 0,
   },
+
+  items: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Food",
+    },
+  ],
 
   price: {
     type: Number,
-    default: 0,
     required: true,
   },
 
@@ -44,4 +37,5 @@ const schema = new mongoose.Schema({
   },
 });
 
-export const Deal = mongoose.model('Deal', Schema);
+
+export const Deal = mongoose.model('Deal', schema)

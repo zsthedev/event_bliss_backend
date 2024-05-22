@@ -102,7 +102,7 @@ export const assignToVendor = catchAsyncError(async (req, res, next) => {
 
   request.vendor.id = vendor._id;
   vendor.events.push(request._id);
-  request.status = "fee_pending";
+  request.status = "under review by Vendor";
   request.cost = totalCost;
 
   await vendor.save();
@@ -112,6 +112,29 @@ export const assignToVendor = catchAsyncError(async (req, res, next) => {
     success: true,
     message: "Request Assigned To Vendor Successfully",
     totalCost: totalCost,
+  });
+});
+
+export const approveVendor = catchAsyncError(async (req, res, next) => {
+  const { reqId } = req.params;
+
+  if (!reqId) {
+    return next(new ErrorHandler("Invalid Id", 401));
+  }
+
+  const request = await Request.findById(reqId);
+
+  if (!request) {
+    return next(new ErrorHandler("Request not found", 404));
+  }
+
+  request.status = "fee_pending";
+
+  await request.save();
+
+  res.status(200).json({
+    success: true,
+    message: "Request Approved Successfully",
   });
 });
 
@@ -134,7 +157,9 @@ export const getMyEvents = catchAsyncError(async (req, res, next) => {
   let events = requests.filter(
     (r) =>
       (r.client && r.client.id.toString() === user._id.toString()) ||
-      (r.vendor && r.vendor.id && r.vendor.id.toString() === user._id.toString())
+      (r.vendor &&
+        r.vendor.id &&
+        r.vendor.id.toString() === user._id.toString())
   );
 
   res.status(200).json({
@@ -142,7 +167,6 @@ export const getMyEvents = catchAsyncError(async (req, res, next) => {
     events: events,
   });
 });
-
 
 export const getRequestDetails = catchAsyncError(async (req, res, next) => {
   const { id } = req.params;

@@ -49,6 +49,8 @@ import eventRouter from "./routes/eventRoutes.js";
 import decorRouter from "./routes/decorRoute.js";
 import requestRouter from "./routes/requestRoutes.js";
 import paymentRouter from "./routes/paymentRoutes.js";
+import otherRouter from "./routes/otherRoutes.js";
+import dealRouter from "./routes/dealRoutes.js";
 
 app.use("/api/v1", authRouter);
 app.use("/api/v1", menuRouter);
@@ -56,6 +58,8 @@ app.use("/api/v1", eventRouter);
 app.use("/api/v1", decorRouter);
 app.use("/api/v1", requestRouter);
 app.use("/api/v1", paymentRouter);
+app.use("/api/v1", otherRouter);
+app.use("/api/v1", dealRouter);
 
 
 app.get("/", (req, res) => {
