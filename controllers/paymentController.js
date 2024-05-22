@@ -2,6 +2,7 @@ import { catchAsyncError } from "../middlewares/catchAsyncError.js";
 import { Request } from "../models/Request.js";
 import Stripe from "stripe";
 import ErrorHandler from "../utils/errorHandler.js";
+import { User } from "../models/User.js";
 
 export const createCheckOutSession = catchAsyncError(async (req, res, next) => {
   const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
@@ -37,6 +38,42 @@ export const createCheckOutSession = catchAsyncError(async (req, res, next) => {
   res.status(200).json({
     sucess: true,
     sessionId: session.id,
-    requestId: request._id
+    requestId: request._id,
+  });
+});
+
+export const createCartCheckout = catchAsyncError(async (req, res, next) => {
+  const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
+
+  const user = await User.findById(req.user._id);
+
+  if (user.cart.length === 0) {
+    return next(new ErrorHandler("Cart cant be empty"));
+  }
+
+  const lineItems = user.cart.map((item) => ({
+    price_data: {
+      currency: "pkr",
+      product_data: {
+        name: item.name,
+        images: [item.image],
+      },
+
+      unit_amount: item.price * 100,
+    },
+  }));
+
+ 
+  const session = await stripe.checkout.sessions.create({
+    lineItems,
+    mode: "payment",
+    success_url: `${process.env.FRONTEND_URL}?csuccess=true`,
+    cancel_url: `${process.env.FRONTEND_URL}?ccanceled=true`,
+  });
+
+  res.status(200).json({
+    sucess: true,
+    sessionId: session.id,
+   
   });
 });

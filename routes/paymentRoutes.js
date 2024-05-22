@@ -5,4 +5,6 @@ const router = express.Router();
 
 router.post('/create_checkout/:id', isAuthenticated, createCheckOutSession)
 
+router.post('/create_cart_checkout', isAuthenticated, createCheckOutSession)
+
 export default router

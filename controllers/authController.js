@@ -6,6 +6,7 @@ import getDataUri from "../utils/dataUri.js";
 import cloudinary from "cloudinary";
 import { sendEmail } from "../utils/sendEmail.js";
 import crypto from "crypto";
+import { Food } from "../models/Food.js";
 
 export const register = catchAsyncError(async (req, res, next) => {
   const { name, email, role, password } = req.body;
@@ -23,7 +24,6 @@ export const register = catchAsyncError(async (req, res, next) => {
 
   const fileUri = getDataUri(file);
   const mycloud = await cloudinary.v2.uploader.upload(fileUri.content);
-
 
   user = await User.create({
     name: name,
@@ -212,58 +212,57 @@ export const resetPassword = catchAsyncError(async (req, res, next) => {
   });
 });
 
-export const addToPlaylist = catchAsyncError(async (req, res, next) => {
-  const user = await User.findById(req.user._id);
-  const course = await Course.findById(req.body.id);
+export const addToCart = catchAsyncError(async (req, res, next) => {
 
-  if (!course) {
-    return next(new ErrorHandler("Invalid Course Id", 401));
+  const user = await User.findById(req.user._id);
+  const food = await Food.findById(req.params.id);
+
+  if (!food) {
+    return next(new ErrorHandler("Invalid Food Id", 401));
   }
-  const itemExists = user.playlist.find((item) => {
-    if (item.course.toString() === course._id.toString()) return true;
+
+  const itemExists = user.cart.find((item) => {
+    if (item.id.toString() === food._id.toString()) return true;
   });
 
   if (itemExists) {
-    return next(new ErrorHandler("Course already exists in playlist", 400));
+    return next(new ErrorHandler("Food already exists in playlist", 400));
   }
-  user.playlist.push({
-    course: course._id,
-    title: course.title,
-    description: course.description,
-    numOfVideos: course.numOfVideos,
-    views: course.views,
-    poster: course.poster.url,
-    category: course.category,
+  user.cart.push({
+    id: food._id,
+    name: food.name,
+    price: food.price,
+    category: food.category,
+    image: food.image.url,
   });
 
   await user.save();
 
   res.status(200).json({
     sucess: true,
-    message: "Added to Playlist successfully",
+    message: "Added to Cart successfully",
   });
 });
 
-export const removeFromPlaylist = catchAsyncError(async (req, res, next) => {
+export const removeFromCart= catchAsyncError(async (req, res, next) => {
   const user = await User.findById(req.user._id);
-  const course = await Course.findById(req.query.id);
+  const food = await Food.findById(req.params.id);
 
-  if (!course) {
-    return next(new ErrorHandler("Invalid Course Id", 401));
+  if (!food) {
+    return next(new ErrorHandler("Invalid Food Id", 401));
   }
-  const newPlaylist = user.playlist.filter((item) => {
-    if (item.course.toString() !== course._id.toString()) return item;
+  const newCart = user.cart.filter((item) => {
+    if (item.id.toString() !== food._id.toString()) return item;
   });
 
-  user.playlist = newPlaylist;
+  user.cart = newCart;
 
   await user.save();
 
-  await user.save();
 
   res.status(200).json({
     sucess: true,
-    message: "Course Removed from Playlist successfully",
+    message: "Food Removed from Cart successfully",
   });
 });
 

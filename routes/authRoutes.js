@@ -9,11 +9,11 @@ import {
   updateProfilePicture,
   forgetPassword,
   resetPassword,
-  addToPlaylist,
-  removeFromPlaylist,
   getAllUsers,
   deleteUser,
   updateUserRole,
+  addToCart,
+  removeFromCart,
 } from "../controllers/authController.js";
 import { authorizeAdmin, isAuthenticated } from "../middlewares/auth.js";
 import singleUpload from "../middlewares/multer.js";
@@ -34,8 +34,9 @@ router.put(
 );
 router.post("/forgetpassword", forgetPassword);
 router.put("/resetpassword/:token", resetPassword);
-router.put("/addtoplaylist", isAuthenticated, addToPlaylist);
-router.delete("/removefromplaylist", isAuthenticated, removeFromPlaylist);
+
+router.put("/addtocart/:id", isAuthenticated, addToCart);
+router.delete("/removefromcart/:id", isAuthenticated, removeFromCart);
 
 // Admin Routes
 router.get("/admin/users", isAuthenticated, authorizeAdmin, getAllUsers);

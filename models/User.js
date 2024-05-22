@@ -4,6 +4,7 @@ import jwt from "jsonwebtoken";
 import bcrypt from "bcrypt";
 import crypto from "crypto";
 import { validate } from "node-cron";
+import { type } from "os";
 
 const schema = new mongoose.Schema({
   name: {
@@ -53,6 +54,35 @@ const schema = new mongoose.Schema({
       type: String,
     },
   },
+
+  cart: [
+    {
+      id: {
+        type: String,
+        required: true,
+      },
+
+      name: {
+        type: String,
+        required: true,
+      },
+
+      price: {
+        type: Number,
+        required: true,
+      },
+
+      category: {
+        type: String,
+        required: true,
+      },
+
+      image: {
+        type: String,
+        required: true,
+      },
+    },
+  ],
 
   createdAt: {
     type: Date,
