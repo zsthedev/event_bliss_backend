@@ -15,6 +15,7 @@ import {
   addToCart,
   removeFromCart,
   cartEmpty,
+  getCartItems,
 } from "../controllers/authController.js";
 import { authorizeAdmin, isAuthenticated } from "../middlewares/auth.js";
 import singleUpload from "../middlewares/multer.js";
@@ -39,6 +40,7 @@ router.put("/resetpassword/:token", resetPassword);
 router.put("/addtocart/:id", isAuthenticated, addToCart);
 router.delete("/removefromcart/:id", isAuthenticated, removeFromCart);
 router.put("/cartempty", isAuthenticated, cartEmpty);
+router.get("/cart", isAuthenticated, getCartItems);
 
 // Admin Routes
 router.get("/admin/users", isAuthenticated, authorizeAdmin, getAllUsers);
