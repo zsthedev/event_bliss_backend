@@ -58,7 +58,7 @@ export const createCartCheckout = catchAsyncError(async (req, res, next) => {
         name: item.name,
         images: [item.image],
       },
-
+      quantity: 1,
       unit_amount: item.price * 100,
     },
   }));
