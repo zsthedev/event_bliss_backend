@@ -116,10 +116,10 @@ export const assignToVendor = catchAsyncError(async (req, res, next) => {
 });
 
 export const getAllRequest = catchAsyncError(async (req, res, next) => {
-  const requests = await Request.find();
+  const requests = await Request.find({});
   res.status(200).json({
     success: true,
-    request,
+    requests,
   });
 });
 
