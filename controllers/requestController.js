@@ -133,8 +133,8 @@ export const getMyEvents = catchAsyncError(async (req, res, next) => {
 
   let events = requests.filter(
     (r) =>
-      r.client.id.toString() === user._id.toString() ||
-      r.vendor.id.toString() === user._id.toString()
+      (r.client && r.client.id.toString() === user._id.toString()) ||
+      (r.vendor && r.vendor.id && r.vendor.id.toString() === user._id.toString())
   );
 
   res.status(200).json({
@@ -142,6 +142,7 @@ export const getMyEvents = catchAsyncError(async (req, res, next) => {
     events: events,
   });
 });
+
 
 export const getRequestDetails = catchAsyncError(async (req, res, next) => {
   const { id } = req.params;
