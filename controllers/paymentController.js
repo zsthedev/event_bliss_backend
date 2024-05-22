@@ -30,7 +30,7 @@ export const createCheckOutSession = catchAsyncError(async (req, res, next) => {
       },
     ],
     mode: "payment",
-    success_url: `${process.env.FRONTEND_URL}?success=true`,
+    success_url: `${process.env.FRONTEND_URL}?success=true?reqId=${request._id}`,
     cancel_url: `${process.env.FRONTEND_URL}?canceled=true`,
   });
 
