@@ -34,5 +34,8 @@ export const createCheckOutSession = catchAsyncError(async (req, res, next) => {
     cancel_url: `${process.env.FRONTEND_URL}?canceled=true`,
   });
 
-  res.redirect(303, session.url);
+  res.status(200).json({
+    sucess: true,
+    sessionId: session.id,
+  });
 });
