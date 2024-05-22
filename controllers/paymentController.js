@@ -65,7 +65,7 @@ export const createCartCheckout = catchAsyncError(async (req, res, next) => {
 
  
   const session = await stripe.checkout.sessions.create({
-    lineItems,
+    line_items: lineItems,
     mode: "payment",
     success_url: `${process.env.FRONTEND_URL}?csuccess=true`,
     cancel_url: `${process.env.FRONTEND_URL}?ccanceled=true`,
