@@ -213,7 +213,6 @@ export const resetPassword = catchAsyncError(async (req, res, next) => {
 });
 
 export const addToCart = catchAsyncError(async (req, res, next) => {
-
   const user = await User.findById(req.user._id);
   const food = await Food.findById(req.params.id);
 
@@ -244,7 +243,7 @@ export const addToCart = catchAsyncError(async (req, res, next) => {
   });
 });
 
-export const removeFromCart= catchAsyncError(async (req, res, next) => {
+export const removeFromCart = catchAsyncError(async (req, res, next) => {
   const user = await User.findById(req.user._id);
   const food = await Food.findById(req.params.id);
 
@@ -258,7 +257,6 @@ export const removeFromCart= catchAsyncError(async (req, res, next) => {
   user.cart = newCart;
 
   await user.save();
-
 
   res.status(200).json({
     sucess: true,
@@ -304,6 +302,18 @@ export const updateUserRole = catchAsyncError(async (req, res, next) => {
   res.status(200).json({
     sucess: true,
     message: `Role Updated to ${user.role} Successfully`,
+  });
+});
+
+export const cartEmpty = catchAsyncError(async (req, res, next) => {
+  const user = await User.findById(id);
+
+  user.cart = [];
+
+  await user.save();
+
+  res.status(200).json({
+    sucess: true,
   });
 });
 

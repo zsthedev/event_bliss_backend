@@ -37,6 +37,7 @@ router.put("/resetpassword/:token", resetPassword);
 
 router.put("/addtocart/:id", isAuthenticated, addToCart);
 router.delete("/removefromcart/:id", isAuthenticated, removeFromCart);
+router.delete("/cartempty", isAuthenticated, );
 
 // Admin Routes
 router.get("/admin/users", isAuthenticated, authorizeAdmin, getAllUsers);
