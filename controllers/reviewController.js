@@ -4,7 +4,6 @@ import ErrorHandler from "../utils/errorHandler.js";
 
 export const createReview = catchAsyncError(async (req, res, next) => {
   const { author, ratings, message } = req.body;
-
   if (!author || !ratings || !message) {
     return next(new ErrorHandler("Please enter all feilds", 401));
   }
