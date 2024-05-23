@@ -9,5 +9,5 @@ router.get('/requests', isAuthenticated, authorizeAdmin, getAllRequest)
 router.get('/my_requests', isAuthenticated, getMyEvents)
 router.get('/request/:id', isAuthenticated, getRequestDetails)
 router.put('/update_req_status/:id', isAuthenticated, updateRequestStatus)
-router.put('/approve_vendor/:id', isAuthenticated, approveVendor)
+router.put('/approve_vendor/:reqId', isAuthenticated, approveVendor)
 export default router;
