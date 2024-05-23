@@ -55,7 +55,7 @@ export const updatePackage = catchAsyncError(async (req, res, next) => {
 });
 
 export const getAllPackages = catchAsyncError(async (req, res, next) => {
-  const deals = await Deal.find();
+  const deals = await Deal.find({}).populate("event").populate("items").populate("decor");
 
   res.status(200).json({
     success: true,

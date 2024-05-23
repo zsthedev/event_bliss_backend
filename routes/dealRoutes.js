@@ -7,7 +7,7 @@ const router = express.Router();
 router.post('/create_package', isAuthenticated, authorizeAdmin, createPackage)
 router.put('/update_package/:id', isAuthenticated, authorizeAdmin, updatePackage)
 router.delete('/delete_package/:id', isAuthenticated, authorizeAdmin, deleteDeal)
-router.get('/packages', isAuthenticated, authorizeAdmin, getAllPackages)
+router.get('/packages',  getAllPackages)
 router.get('/package/:id', isAuthenticated, authorizeAdmin, getDeal)
 
 export default router;
