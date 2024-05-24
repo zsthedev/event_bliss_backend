@@ -20,6 +20,7 @@ import {
 import { authorizeAdmin, isAuthenticated } from "../middlewares/auth.js";
 import singleUpload from "../middlewares/multer.js";
 import { createReview, getAllReviews } from "../controllers/reviewController.js";
+import { createContact, getAllContacts } from "../controllers/contactController.js";
 
 const router = express.Router();
 
@@ -52,3 +53,8 @@ router.put("/admin/user/:id", isAuthenticated, authorizeAdmin, updateUserRole);
 router.post('/create_review', isAuthenticated, createReview);
 router.get('/reviews', getAllReviews);
 export default router;
+
+// Contact Form
+
+router.post('/create_contact', isAuthenticated, createContact);
+router.get('/contacts', getAllContacts);
