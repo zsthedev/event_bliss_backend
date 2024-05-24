@@ -19,8 +19,14 @@ import {
 } from "../controllers/authController.js";
 import { authorizeAdmin, isAuthenticated } from "../middlewares/auth.js";
 import singleUpload from "../middlewares/multer.js";
-import { createReview, getAllReviews } from "../controllers/reviewController.js";
-import { createContact, getAllContacts } from "../controllers/contactController.js";
+import {
+  createReview,
+  getAllReviews,
+} from "../controllers/reviewController.js";
+import {
+  createContact,
+  getAllContacts,
+} from "../controllers/contactController.js";
 
 const router = express.Router();
 
@@ -50,11 +56,11 @@ router.delete("/admin/user/:id", isAuthenticated, authorizeAdmin, deleteUser);
 router.put("/admin/user/:id", isAuthenticated, authorizeAdmin, updateUserRole);
 
 // Review Routes
-router.post('/create_review', isAuthenticated, createReview);
-router.get('/reviews', getAllReviews);
+router.post("/create_review", isAuthenticated, createReview);
+router.get("/reviews", getAllReviews);
 export default router;
 
 // Contact Form
 
-router.post('/create_contact', isAuthenticated, createContact);
-router.get('/contacts', getAllContacts);
+router.post("/create_contact", createContact);
+router.get("/contacts", getAllContacts);
